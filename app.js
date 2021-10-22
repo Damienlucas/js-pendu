@@ -1,11 +1,13 @@
 const sectionChoice = document.getElementsByTagName('section')[0];
 const sectionForm = document.getElementsByTagName('section')[1];
+const potenceDiv = document.getElementById('div-potence');
 const letterContainer = document.getElementById('letter-container');
-let valeurLetterToTest;
+var valeurLetterToTest;
 var difficultChoice;
 var randomWord = "bonjour";
 var badLetter = [];
 var letterEntered = [];
+var wrongLetter;
 
 
 
@@ -16,14 +18,15 @@ function open (){
 open();
 
 function choiceGenerate(){
-    var playBtnFacileConstruct = document.createElement('button');
+    let playBtnFacileConstruct = document.createElement('button');
     playBtnFacileConstruct.id = "facile";
     sectionChoice.appendChild(playBtnFacileConstruct);
-    var playBtnFacile = document.getElementById('facile');
+    let playBtnFacile = document.getElementById('facile');
     playBtnFacile.innerHTML = "test";
 
     if(playBtnFacile.addEventListener("click", function() {
         difficultChoice = playBtnFacile;
+        wrongLetter = 0;
         generate();
         play(difficultChoice);
         randomDisplay();
@@ -33,16 +36,16 @@ function choiceGenerate(){
 function generate(){
     sectionChoice.style.display = "none";
 
-    var formulaire = document.createElement('form');
+    let formulaire = document.createElement('form');
     formulaire.id = "inputBox";
     sectionForm.appendChild(formulaire);
 
-    var labelInstruct = document.createElement('label');
+    let labelInstruct = document.createElement('label');
     labelInstruct.id = "label-instruct";
     formulaire.appendChild(labelInstruct);
-    labelInstruct.innerHTML = "Veuillez sisir une lettre SVP";
+    labelInstruct.innerHTML = "Veuillez saisir une lettre SVP";
 
-    var letterToTestConstruct = document.createElement('input');
+    let letterToTestConstruct = document.createElement('input');
     letterToTestConstruct.setAttribute('required', 'true|false');
     letterToTestConstruct.setAttribute('type','text');
     letterToTestConstruct.setAttribute('maxlength','1');
@@ -51,28 +54,35 @@ function generate(){
     formulaire.appendChild(letterToTestConstruct);
     //ou formulaire.innerHTML = '<input id="letter-to-test" maxlength="1" type="text" required></input>';
 
-    var envoyerLetterToTestConstruct = document.createElement('button');
+    let envoyerLetterToTestConstruct = document.createElement('button');
     envoyerLetterToTestConstruct.id = "envoyer-letter-to-test";
     formulaire.appendChild(envoyerLetterToTestConstruct);
     envoyerLetterToTestConstruct.innerHTML = "envoyer";
     
-    var tabLetterEntered = document.createElement('div');
+    let tabLetterEntered = document.createElement('div');
     tabLetterEntered.id = "tab-letter-entered";
     sectionForm.appendChild(tabLetterEntered);
+
+    let potence = document.createElement('img');
+    potence.setAttribute('src', './images/potence-0.png');
+    potence.setAttribute('alt','potence du jeu pendu');
+    potence.id = "potence";
+    potenceDiv.appendChild(potence);
 }
 
 function play (difficultChoice){
     let formEnv = document.getElementById('inputBox');
     let letterToTest = document.getElementById('letter-to-test');
 
+    console.log("play"+wrongLetter);
+
     difficultChoice.style.display = "none";
 
     formEnv.addEventListener("submit", (e) => {
         e.preventDefault();
         var valeurLetterToTest = letterToTest.value;
-        console.log(valeurLetterToTest);
         check(valeurLetterToTest);
-        stock(valeurLetterToTest);
+        
         // effacer la valeur saisie dans le champ input
         document.getElementById("letter-to-test").value = '';
     })
@@ -89,18 +99,20 @@ function randomDisplay(){
         letterDiv.className = "letter-div";
         letterContainer.appendChild(letterDiv);
         letterDiv.innerHTML = wordPiece;
-        // letterDiv.style.visibility = "hidden";
+        letterDiv.style.visibility = "hidden";
     }
-
 }
 
 function check(lettre){
+
     if(randomWord.includes(lettre)){
         console.log("super");
-
+        stock(lettre);
+        goodLetter(lettre);
     }
     else{
         console.log("pasbien");
+        stock(lettre); 
     }
 
 }
@@ -112,7 +124,7 @@ function stock(lettre){
     if(letterEntered.includes(lettre)){
         console.log("deja saisi");
         letterToTest.setAttribute('placeholder', 'Désolé; lettre déjà saisie');
-        
+        return;
     }
      
     else{
@@ -120,8 +132,44 @@ function stock(lettre){
         console.log(letterEntered);
         letterToTest.setAttribute('placeholder', 'Saisissez une lettre');
      
-    for(let i=0; i < 1; i++){
-        tabLetterEntered.innerHTML += " "+lettre+" ";
+        for(let i=0; i < 1; i++){
+            tabLetterEntered.innerHTML += " "+lettre+" ";
+        }
+        if(randomWord.includes(lettre)){
+    
+            }
+            else{
+                wrongLetter++;
+                console.log("avantenvoi"+wrongLetter);
+                change(wrongLetter);
+                console.log("envoi"+wrongLetter);
+            }
     }
+}
+
+function goodLetter(lettre) {
+    let letterDiv = document.getElementsByClassName('letter-div');
+    
+    for(i=0; i < randomWord.length; i++){
+        
+        if(randomWord[i] == lettre){
+            letterDiv[i].style.visibility = "visible";  
+        }  
+    }
+}
+
+function change(wrongLetter) {
+    console.log("resultat"+wrongLetter);
+    let img = document.getElementById('potence');
+
+    if(wrongLetter <= 7){
+        console.log("img"+wrongLetter);
+        img.setAttribute('src', "./images/potence-"+wongLetter+".png");
+    }
+    else{
+        var looseConstruct = document.createElement('p');
+        looseConstruct.id = "p-loose";
+        formulaire.appendChild(looseConstruct);
+        looseConstruct.innerHTML = "Désolé, vous avez perdu ! !";
     }
 }

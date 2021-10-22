@@ -35,6 +35,7 @@
 }
 form{
     margin-top: 25px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -45,4 +46,16 @@ input{
 }
 button{
     font-size: 1.5rem;
+}
+#div-potence{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#tab-letter-entered{
+    font-size: 2rem;
+    letter-spacing: 15px;
+    border-radius: 10px;
+    border: 3px solid black;
+    height: 40px;
 }
