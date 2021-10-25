@@ -2,6 +2,9 @@ const sectionChoice = document.getElementsByTagName('section')[0];
 const sectionForm = document.getElementsByTagName('section')[1];
 const potenceDiv = document.getElementById('div-potence');
 const letterContainer = document.getElementById('letter-container');
+const sectionLetterContainer = document.getElementById('section-letter-container');
+const sectionDivPotence = document.getElementById('section-div-potence');
+const sectionFin = document.getElementById('section-fin');
 var valeurLetterToTest;
 var difficultChoice;
 var randomWord = "bonjour";
@@ -13,11 +16,14 @@ var wrongLetter;
 
 function open (){
     choiceGenerate();
+    console.log("revoilou");
     
 }
 open();
 
 function choiceGenerate(){
+    console.log("oupas");
+    
     let playBtnFacileConstruct = document.createElement('button');
     playBtnFacileConstruct.id = "facile";
     sectionChoice.appendChild(playBtnFacileConstruct);
@@ -35,6 +41,7 @@ function choiceGenerate(){
 
 function generate(){
     sectionChoice.style.display = "none";
+   
 
     let formulaire = document.createElement('form');
     formulaire.id = "inputBox";
@@ -94,7 +101,6 @@ function randomDisplay(){
     for(i=0; i < randomWord.length; i++){
         let wordPiece = randomWord.substring(i,i+1);
         tabDisplay.push(wordPiece);
-        console.log(tabDisplay);
         var letterDiv = document.createElement('div');
         letterDiv.className = "letter-div";
         letterContainer.appendChild(letterDiv);
@@ -106,12 +112,10 @@ function randomDisplay(){
 function check(lettre){
 
     if(randomWord.includes(lettre)){
-        console.log("super");
         stock(lettre);
-        goodLetter(lettre);
+        findLetter(lettre);
     }
     else{
-        console.log("pasbien");
         stock(lettre); 
     }
 
@@ -122,14 +126,12 @@ function stock(lettre){
     let letterToTest = document.getElementById('letter-to-test');
 
     if(letterEntered.includes(lettre)){
-        console.log("deja saisi");
         letterToTest.setAttribute('placeholder', 'Désolé; lettre déjà saisie');
         return;
     }
      
     else{
         letterEntered.push(lettre);
-        console.log(letterEntered);
         letterToTest.setAttribute('placeholder', 'Saisissez une lettre');
      
         for(let i=0; i < 1; i++){
@@ -140,14 +142,12 @@ function stock(lettre){
             }
             else{
                 wrongLetter++;
-                console.log("avantenvoi"+wrongLetter);
                 change(wrongLetter);
-                console.log("envoi"+wrongLetter);
             }
     }
 }
 
-function goodLetter(lettre) {
+function findLetter(lettre) {
     let letterDiv = document.getElementsByClassName('letter-div');
     
     for(i=0; i < randomWord.length; i++){
@@ -162,14 +162,40 @@ function change(wrongLetter) {
     console.log("resultat"+wrongLetter);
     let img = document.getElementById('potence');
 
-    if(wrongLetter <= 7){
+    if(wrongLetter < 7){
         console.log("img"+wrongLetter);
-        img.setAttribute('src', "./images/potence-"+wongLetter+".png");
+        img.setAttribute('src', "./images/potence-"+wrongLetter+".png");
+        console.log(img);
     }
-    else{
+    else if(wrongLetter == 7){
+        sectionDivPotence.style.display = "none";
+        sectionLetterContainer.style.display = "none";
+        sectionFin.style.display = "block";
+        let imgD = document.createElement('img');
+        imgD.setAttribute('src', "./images/potence-"+wrongLetter+".png");
+        imgD.setAttribute('alt','potence du jeu pendu');
+        sectionFin.appendChild(imgD);
+        
         var looseConstruct = document.createElement('p');
         looseConstruct.id = "p-loose";
-        formulaire.appendChild(looseConstruct);
+        sectionFin.appendChild(looseConstruct);
         looseConstruct.innerHTML = "Désolé, vous avez perdu ! !";
+
+        replay();
+       
     }
+}
+
+function replay(){
+    
+    let replayBtnConstruct = document.createElement('button');
+    replayBtnConstruct.id = "rejouer";
+    sectionFin.appendChild(replayBtnConstruct);
+    let replayBtn = document.getElementById('rejouer');
+    replayBtn.innerHTML = "rejouer";
+
+    if(replayBtn.addEventListener("click", function() {
+        document.location.reload(true);
+    }));
+
 }
