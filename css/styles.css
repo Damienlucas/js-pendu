@@ -9,7 +9,7 @@
     width: 100vw;
     height: 100vh;
 }
-#facile{
+#easy{
     border-radius: 10px;
     background-color: red;
     width: 80px;
@@ -47,7 +47,7 @@ input{
 button{
     font-size: 1.5rem;
 }
-#div-potence{
+#div-gallows{
     display: flex;
     justify-content: center;
     align-items: center;
