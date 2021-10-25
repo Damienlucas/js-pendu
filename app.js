@@ -7,10 +7,12 @@ const sectionDivGallows = document.getElementById('section-div-gallows');
 const sectionEnd = document.getElementById('section-end');
 var valeurLetterToTest;
 var difficultChoice;
-var randomWord = "bonjour";
+// var randomWord = "bonjour";
 var badLetter = [];
 var letterEntered = [];
 var wrongLetter;
+var score = 0;
+var wordBis = [];
 
 function open (){
     choiceGenerate(); 
@@ -30,8 +32,20 @@ function choiceGenerate(){
         wrongLetter = 0;
         generate();
         play(difficultChoice);
-        randomDisplay();
+        // randomDisplay();
+        randomwordGenerate()
     }));
+}
+function randomwordGenerate(){
+    var randomNumber = Math.floor(Math.random() *5);
+    console.log(randomNumber);
+    let wordList = ["bonjour","coucou","neurastenique","prout","grenouille"];
+    console.log(wordList);
+    randomWord = wordList[randomNumber];
+    console.log(randomWord);
+    randomDisplay(randomWord);
+
+
 }
 
 function generate(){
@@ -87,7 +101,8 @@ function play (difficultChoice){
     })
 }
 
-function randomDisplay(){
+function randomDisplay(randomWord){
+    console.log("recu"+randomWord);
 
     var tabDisplay = [];
     for(i=0; i < randomWord.length; i++){
@@ -159,7 +174,23 @@ function findLetter(letter) {
         
         if(randomWord[i] == letter){
             letterDiv[i].style.visibility = "visible";  
+            wordBis[i] = letter;
+            console.log(wordBis);
+            winOrNot(wordBis);
         }  
+    }
+}
+function winOrNot(wordBis){
+    console.log("envoi"+wordBis);
+    let wordBisString = wordBis.toString();
+    let wordBisReplace = wordBisString.replace(/,/g,"");
+    console.log(wordBisReplace);
+
+    if(randomWord == wordBisReplace){
+        console.log("youhou");
+        score++;
+        console.log("le score est de : "+score);
+        win();
     }
 }
 
@@ -180,10 +211,11 @@ function change(wrongLetter) {
         imgD.setAttribute('alt','potence du jeu pendu');
         sectionEnd.appendChild(imgD);
         
-        var looseConstruct = document.createElement('p');
+        let looseConstruct = document.createElement('p');
         looseConstruct.id = "p-loose";
         sectionEnd.appendChild(looseConstruct);
-        looseConstruct.innerHTML = "Désolé, vous avez perdu ! !";
+        let looseP = document.getElementById('p-loose');
+        looseP.innerHTML = "Désolé, vous avez perdu ! !";
 
         rePlay();
        
@@ -202,4 +234,17 @@ function rePlay(){
         document.location.reload(true);
     }));
 
+}
+function win(){
+    sectionDivGallows.style.display = "none";
+    sectionLetterContainer.style.display = "none";
+    sectionEnd.style.display = "block";
+
+    let winConstruct = document.createElement('p');
+    winConstruct.id = "p-win";
+    sectionEnd.appendChild(winConstruct);
+    let winP = document.getElementById('p-win');
+    winP.innerHTML = "Bravo, vous avez gagné ! !";
+
+    rePlay();
 }
