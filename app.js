@@ -102,6 +102,20 @@ function randomDisplay(){
 }
 
 function check(letter){
+    
+    let onlyAccept = /^[A-Za-z]+$/;
+
+    if(letter == "" || letter == " " || !letter.match(onlyAccept)){
+        document.getElementById("letter-to-test").value = '';
+        document.getElementById("letter-to-test").placeholder = "Ce n'est pas une lettre...";
+        return;
+    }
+    else{
+        compare(letter);
+    }
+
+}
+function compare(letter){
 
     if(randomWord.includes(letter)){
         stock(letter);
@@ -110,7 +124,6 @@ function check(letter){
     else{
         stock(letter); 
     }
-
 }
 
 function stock(letter){
