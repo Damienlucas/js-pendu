@@ -6,7 +6,7 @@ const sectionLetterContainer = document.getElementById('section-letter-container
 const sectionDivGallows = document.getElementById('section-div-gallows');
 const sectionEnd = document.getElementById('section-end');
 var valeurLetterToTest;
-var difficultChoice;
+// var difficultChoice;
 // var randomWord = "bonjour";
 var badLetter = [];
 var letterEntered = [];
@@ -21,31 +21,55 @@ open();
 
 function choiceGenerate(){
     
-    let playBtnEasyConstruct = document.createElement('button');
-    playBtnEasyConstruct.id = "easy";
-    sectionChoice.appendChild(playBtnEasyConstruct);
-    let playBtnEasy = document.getElementById('easy');
-    playBtnEasy.innerHTML = "test";
+    let playBtnAnimalConstruct = document.createElement('button');
+    playBtnAnimalConstruct.id = "animal";
+    sectionChoice.appendChild(playBtnAnimalConstruct);
+    let playBtnAnimal = document.getElementById('animal');
+    playBtnAnimal.innerHTML = "animaux";
 
-    if(playBtnEasy.addEventListener("click", function() {
-        difficultChoice = playBtnEasy;
+    let playBtnKaamelottConstruct = document.createElement('button');
+    playBtnKaamelottConstruct.id = "Kaamelott";
+    sectionChoice.appendChild(playBtnKaamelottConstruct);
+    let playBtnKaamelott = document.getElementById('Kaamelott');
+    playBtnKaamelott.innerHTML = "Kaamelott";
+
+    if(playBtnAnimal.addEventListener("click", function() {
+        // difficultChoice = playBtnAnimal;
         wrongLetter = 0;
         generate();
-        play(difficultChoice);
+        play();
         // randomDisplay();
-        randomwordGenerate()
+        randomwordAnimal()
     }));
+
+    if(playBtnKaamelott.addEventListener("click", function() {
+        wrongLetter = 0;
+        generate();
+        play();
+        randomwordKaamelott()
+    }));
+
+
 }
-function randomwordGenerate(){
-    var randomNumber = Math.floor(Math.random() *5);
+
+function randomwordAnimal(){
+    let randomNumber = Math.floor(Math.random() *10);
     console.log(randomNumber);
-    let wordList = ["bonjour","coucou","neurastenique","prout","grenouille"];
-    console.log(wordList);
-    randomWord = wordList[randomNumber];
+    let wordAnimal = ["chien","baleine","castor","chimpanze","buffle","chevreuil","elephant","mouton","rhinoceros","taupe"];
+    console.log(wordAnimal);
+    randomWord = wordAnimal[randomNumber];
     console.log(randomWord);
     randomDisplay(randomWord);
+}
 
-
+function randomwordKaamelott(){
+    let randomNumber = Math.floor(Math.random() *10);
+    console.log(randomNumber);
+    let wordKaamelott = ["boniche","galoche","tarlouze","poulette","revolte","graal","pucelle","equidistant","peremptoire","clodos"];
+    console.log(wordKaamelott);
+    randomWord = wordKaamelott[randomNumber];
+    console.log(randomWord);
+    randomDisplay(randomWord);
 }
 
 function generate(){
@@ -85,11 +109,11 @@ function generate(){
     gallowsDiv.appendChild(gallows);
 }
 
-function play (difficultChoice){
+function play (){
     let formEnv = document.getElementById('inputBox');
     let letterToTest = document.getElementById('letter-to-test');
 
-    difficultChoice.style.display = "none";
+    sectionChoice.style.display = "none";
 
     formEnv.addEventListener("submit", (e) => {
         e.preventDefault();

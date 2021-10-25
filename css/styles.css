@@ -9,11 +9,12 @@
     width: 100vw;
     height: 100vh;
 }
-#easy{
+#animal, #Kaamelott{
     border-radius: 10px;
     background-color: red;
-    width: 80px;
+    width: 150px;
     height: 50px;
+    margin-left: 15px;
 }
 #letter-container{
     display: flex;
