@@ -15,6 +15,7 @@ const sectionEnd = document.getElementById('section-end');
 const divEnd = document.getElementById('div-end');
 const playBtnAnimal = document.getElementById('play-animal');
 const playBtnKaamelott = document.getElementById('play-kaamelott');
+const playBtnAleatoire = document.getElementById('play-aleatoire');
 var valeurLetterToTest;
 var badLetter = [];
 var letterEntered = [];
@@ -22,6 +23,10 @@ var wrongLetter;
 var score = 0;
 var wordBis = [];
 var begin = false;
+var param;
+var randomWord;
+var paramDivEndLoose;
+var paramDivEndWin;
 
 function open (){
     console.log("le nouveau score est de : "+score);
@@ -35,17 +40,32 @@ function deleted(){
     wrongLetter = 0;
     wordBis = [];
     begin = false;
-    
+
     let menuBtn = document.getElementById('menu');
     let formulaire = document.getElementById('inputBox');
     let gallows = document.getElementById('gallows');
     let tabLetterEntered = document.getElementById('tab-letter-entered');
     let letterContainer = document.getElementById('letter-container');
+    let replayBtn = document.getElementById('replay');
+    let looseP = document.getElementById('p-loose');
+    let winP = document.getElementById('p-win');
+    let imgD = document.getElementById('last-gallows');
     formulaire.remove();
     menuBtn.remove();
     tabLetterEntered.remove();
     letterContainer.remove();
     gallows.remove();
+    replayBtn.remove();
+
+    if(paramDivEndLoose == true){
+        paramDivEndLoose = false;
+        looseP.remove();
+        imgD.remove();
+    }
+    if(paramDivEndWin == true){
+        paramDivEndWin = false;
+        winP.remove();
+    }
 }
 
 function choiceGenerate(){
@@ -54,25 +74,15 @@ function choiceGenerate(){
     sectionLetterContainer.style.display = "none";
     sectionEnd.style.display = "none";
    
-    // let playBtnAnimalConstruct = document.createElement('button');
-    // playBtnAnimalConstruct.id = "animal";
-    // sectionChoice.appendChild(playBtnAnimalConstruct);
-    // let playBtnAnimal = document.getElementById('animal');
-    // playBtnAnimal.innerHTML = "animaux";
-
-    // let playBtnKaamelottConstruct = document.createElement('button');
-    // playBtnKaamelottConstruct.id = "Kaamelott";
-    // sectionChoice.appendChild(playBtnKaamelottConstruct);
-    // let playBtnKaamelott = document.getElementById('Kaamelott');
-    // playBtnKaamelott.innerHTML = "Kaamelott";
-    // wrongLetter = 0;
+    wrongLetter = 0;
 
     playBtnAnimal.addEventListener("click", function() {
         if(begin == false){
             begin = true;
             generate();
             play();
-            randomwordAnimal()
+            param = "animal";
+            randomWordGenerate(param);
         }
     });
 
@@ -81,29 +91,47 @@ function choiceGenerate(){
             begin = true;
             generate();
             play();
-            randomwordKaamelott()
+            param = "kaamelott";
+            randomWordGenerate(param);
+        }
+    });
+
+    playBtnAleatoire.addEventListener("click", function() {
+        if(begin == false){
+            begin = true;
+            generate();
+            play();
+            param = "aleatoire";
+            randomWordGenerate(param);
         }
     });
 }
 
-function randomwordAnimal(){
-    let randomNumber = Math.floor(Math.random() *10);
-    console.log(randomNumber);
-    let wordAnimal = ["chien","baleine","castor","chimpanze","buffle","chevreuil","elephant","mouton","rhinoceros","taupe"];
-    console.log(wordAnimal);
-    randomWord = wordAnimal[randomNumber];
-    console.log(randomWord);
-    randomDisplay(randomWord);
-}
-
-function randomwordKaamelott(){
-    let randomNumber = Math.floor(Math.random() *10);
-    console.log(randomNumber);
-    let wordKaamelott = ["boniche","galoche","tarlouze","poulette","revolte","graal","pucelle","equidistant","peremptoire","clodos"];
-    console.log(wordKaamelott);
-    randomWord = wordKaamelott[randomNumber];
-    console.log(randomWord);
-    randomDisplay(randomWord);
+function randomWordGenerate(param){
+    if(param == "animal"){
+        let randomNumber = Math.floor(Math.random() *10);
+        let wordAnimal = ["chien","baleine","castor","chimpanze","buffle","chevreuil","elephant","mouton","rhinoceros","taupe"];
+        console.log(wordAnimal);
+        randomWord = wordAnimal[randomNumber];
+        console.log(randomWord);
+        randomDisplay(randomWord);
+    }
+    if(param == "kaamelott"){
+        let randomNumber = Math.floor(Math.random() *10);
+        let wordKaamelott = ["boniche","galoche","tarlouze","poulette","revolte","graal","pucelle","equidistant","peremptoire","clodos"];
+        console.log(wordKaamelott);
+        randomWord = wordKaamelott[randomNumber];
+        console.log(randomWord);
+        randomDisplay(randomWord);
+    }
+    if(param == "aleatoire"){
+        let randomNumber = Math.floor(Math.random() *2);
+        let wordAleatoire = ["animal","kaamelott"];
+        console.log(wordAleatoire);
+        param = wordAleatoire[randomNumber];
+        console.log("aleatoire"+param);
+        randomWordGenerate(param);
+    }
 }
 
 function generate(){
@@ -161,7 +189,6 @@ function play (){
     let menuBtn = document.getElementById('menu');
     let formEnv = document.getElementById('inputBox');
     let letterToTest = document.getElementById('letter-to-test');
-    console.log("tes ou"+wrongLetter);
 
     menuBtn.addEventListener("click", function() {
         deleted();
@@ -196,8 +223,7 @@ function randomDisplay(randomWord){
     }
 }
 
-function check(letter){
-    
+function check(letter){  
     let onlyAccept = /^[A-Za-z]+$/;
 
     if(letter == "" || letter == " " || !letter.match(onlyAccept)){
@@ -208,10 +234,9 @@ function check(letter){
     else{
         compare(letter);
     }
-
 }
-function compare(letter){
 
+function compare(letter){
     if(randomWord.includes(letter)){
         stock(letter);
         findLetter(letter);
@@ -237,37 +262,31 @@ function stock(letter){
             tabLetterEntered.innerHTML += " "+letter+" ";
         }
         if(randomWord.includes(letter)){
-    
-            }
-            else{
-                wrongLetter++;
-                change(wrongLetter);
-            }
+        }
+        else{
+            wrongLetter++;
+            change(wrongLetter);
+        }
     }
 }
 
 function findLetter(letter) {
     let letterDiv = document.getElementsByClassName('letter-div');
     
-    for(i=0; i < randomWord.length; i++){
-        
+    for(i=0; i < randomWord.length; i++){  
         if(randomWord[i] == letter){
             letterDiv[i].style.visibility = "visible";  
             wordBis[i] = letter;
-            console.log(wordBis);
             winOrNot(wordBis);
         }  
     }
 }
 
 function winOrNot(wordBis){
-    console.log("envoi"+wordBis);
     let wordBisString = wordBis.toString();
     let wordBisReplace = wordBisString.replace(/,/g,"");
-    console.log(wordBisReplace);
 
     if(randomWord == wordBisReplace){
-        console.log("youhou");
         score++;
         console.log("le score est de : "+score);
         win();
@@ -275,7 +294,6 @@ function winOrNot(wordBis){
 }
 
 function change(wrongLetter) {
-    
     let img = document.getElementById('gallows');
 
     if(wrongLetter < 7){
@@ -288,6 +306,7 @@ function change(wrongLetter) {
         let imgD = document.createElement('img');
         imgD.setAttribute('src', "./images/potence/potence-"+wrongLetter+".png");
         imgD.setAttribute('alt','potence du jeu pendu');
+        imgD.id = "last-gallows";
         divEnd.appendChild(imgD);
         
         let looseConstruct = document.createElement('p');
@@ -295,13 +314,13 @@ function change(wrongLetter) {
         divEnd.appendChild(looseConstruct);
         let looseP = document.getElementById('p-loose');
         looseP.innerHTML = "Désolé, vous avez perdu ! !";
+        paramDivEndLoose = true;
 
         rePlay();
     }
 }
 
 function rePlay(){
-
     let replayBtnConstruct = document.createElement('button');
     replayBtnConstruct.id = "replay";
     replayBtnConstruct.className = "btn";
@@ -310,7 +329,6 @@ function rePlay(){
     replayBtn.innerHTML = "rejouer";
 
     if(replayBtn.addEventListener("click", function() {
-        // document.location.reload(true);
         deleted();
         open();
     }));
@@ -326,5 +344,7 @@ function win(){
     divEnd.appendChild(winConstruct);
     let winP = document.getElementById('p-win');
     winP.innerHTML = "Bravo, vous avez gagné ! !";
+    paramDivEndWin = true;
+    
     rePlay();
 }

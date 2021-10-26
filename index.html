@@ -14,7 +14,7 @@
                 <div class="column-center-center" id="div-choice">
                     <h1>Jeu du pendu</h1>
                     <p>
-                        Veuillez choisir votre thème parmi les propositions, sinon par défault, vous aurez un thème aléatoire.
+                        Veuillez choisir votre thème parmi les propositions.
                     </p>
                     <div class="div-button">
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal-animaux">
@@ -22,6 +22,9 @@
                         </button>
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal-kaamelott">
                             Kaamelott
+                        </button>
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal-aleatoire">
+                            Aléatoire
                         </button>
                     </div>
                 </div>
@@ -74,6 +77,26 @@
                                     Essayer de trouver le mot choisi aléatoirement parmi 10 mots utilisés dans les citations de la série Kaamelott.
                                 </p>
                                 <button class="btn" id="play-kaamelott">Jouer</button>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal fade" id="exampleModal-aleatoire" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Aléatoire</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body column-center-center" id="modal-body-aleatoire">
+                                <img src="./images/modals/aleatoire.png" alt="point d'intérrogation">
+                                <p>
+                                    Essayer de trouver le mot choisi aléatoirement parmi tous les mots des différents thèmes proposés.
+                                </p>
+                                <button class="btn" id="play-aleatoire">Jouer</button>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
