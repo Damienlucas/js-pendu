@@ -8,7 +8,7 @@
     --hoverBack-color: #646267;
     --hoverCo-color: #DDD6E7;
 }
-#section-choice{
+#section-choice, #section-end{
     width: 100vw;
     height: 100vh;
     background: var(--premiere-color);
@@ -23,7 +23,7 @@
 h1{
     text-align: center;
 }
-#div-choice{
+#div-choice, #div-end{
     width: 100vw;
     height: 100vh;
 }
@@ -92,6 +92,9 @@ button{
     border-radius: 10px;
     border: 3px solid black;
     height: 40px;
+}
+#menu{
+    margin-top: 30px;
 }
 /* ------------------------------modal-------------------------- */
 .modal-content{

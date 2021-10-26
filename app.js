@@ -6,11 +6,13 @@ var myInput = document.getElementById('myInput')
 
 const sectionChoice = document.getElementsByTagName('section')[0];
 const sectionForm = document.getElementsByTagName('section')[1];
+const boxLetterContainer = document.getElementById('box-letter-container');
 const gallowsDiv = document.getElementById('div-gallows');
-const letterContainer = document.getElementById('letter-container');
 const sectionLetterContainer = document.getElementById('section-letter-container');
+const letterContainerButton = document.getElementById('letter-container-button');
 const sectionDivGallows = document.getElementById('section-div-gallows');
 const sectionEnd = document.getElementById('section-end');
+const divEnd = document.getElementById('div-end');
 const playBtnAnimal = document.getElementById('play-animal');
 const playBtnKaamelott = document.getElementById('play-kaamelott');
 var valeurLetterToTest;
@@ -22,12 +24,36 @@ var wordBis = [];
 var begin = false;
 
 function open (){
+    console.log("le nouveau score est de : "+score);
     choiceGenerate(); 
 }
 open();
 
-function choiceGenerate(){
+function deleted(){
+    badLetter = [];
+    letterEntered = [];
+    wrongLetter = 0;
+    wordBis = [];
+    begin = false;
     
+    let menuBtn = document.getElementById('menu');
+    let formulaire = document.getElementById('inputBox');
+    let gallows = document.getElementById('gallows');
+    let tabLetterEntered = document.getElementById('tab-letter-entered');
+    let letterContainer = document.getElementById('letter-container');
+    formulaire.remove();
+    menuBtn.remove();
+    tabLetterEntered.remove();
+    letterContainer.remove();
+    gallows.remove();
+}
+
+function choiceGenerate(){
+    sectionChoice.style.display = "block";
+    sectionDivGallows.style.display = "none";
+    sectionLetterContainer.style.display = "none";
+    sectionEnd.style.display = "none";
+   
     // let playBtnAnimalConstruct = document.createElement('button');
     // playBtnAnimalConstruct.id = "animal";
     // sectionChoice.appendChild(playBtnAnimalConstruct);
@@ -39,7 +65,7 @@ function choiceGenerate(){
     // sectionChoice.appendChild(playBtnKaamelottConstruct);
     // let playBtnKaamelott = document.getElementById('Kaamelott');
     // playBtnKaamelott.innerHTML = "Kaamelott";
-    wrongLetter = 0;
+    // wrongLetter = 0;
 
     playBtnAnimal.addEventListener("click", function() {
         if(begin == false){
@@ -58,8 +84,6 @@ function choiceGenerate(){
             randomwordKaamelott()
         }
     });
-
-
 }
 
 function randomwordAnimal(){
@@ -84,6 +108,9 @@ function randomwordKaamelott(){
 
 function generate(){
     sectionChoice.style.display = "none";
+    sectionDivGallows.style.display = "block";
+    sectionLetterContainer.style.display = "block";
+    sectionEnd.style.display = "none";
    
     let formulaire = document.createElement('form');
     formulaire.id = "inputBox";
@@ -117,13 +144,29 @@ function generate(){
     gallows.setAttribute('alt','potence du jeu pendu');
     gallows.id = "gallows";
     gallowsDiv.appendChild(gallows);
+
+    let menuBtnConstruct = document.createElement('button');
+    menuBtnConstruct.id = "menu";
+    menuBtnConstruct.className = "btn";
+    letterContainerButton.appendChild(menuBtnConstruct);
+    let menuBtn = document.getElementById('menu');
+    menuBtn.innerHTML = "Menu";
 }
 
 function play (){
+    sectionChoice.style.display = "none";
+    sectionDivGallows.style.display = "block";
+    sectionLetterContainer.style.display = "block";
+    sectionEnd.style.display = "none";
+    let menuBtn = document.getElementById('menu');
     let formEnv = document.getElementById('inputBox');
     let letterToTest = document.getElementById('letter-to-test');
     console.log("tes ou"+wrongLetter);
-    sectionChoice.style.display = "none";
+
+    menuBtn.addEventListener("click", function() {
+        deleted();
+        open();   
+    });
 
     formEnv.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -137,6 +180,9 @@ function play (){
 
 function randomDisplay(randomWord){
     console.log("recu"+randomWord);
+    let letterContainer = document.createElement('div');
+    letterContainer.id = "letter-container";
+    boxLetterContainer.appendChild(letterContainer);
 
     var tabDisplay = [];
     for(i=0; i < randomWord.length; i++){
@@ -183,7 +229,6 @@ function stock(letter){
         letterToTest.setAttribute('placeholder', 'Désolé; lettre déjà saisie');
         return;
     }
-     
     else{
         letterEntered.push(letter);
         letterToTest.setAttribute('placeholder', 'Saisissez une lettre');
@@ -214,6 +259,7 @@ function findLetter(letter) {
         }  
     }
 }
+
 function winOrNot(wordBis){
     console.log("envoi"+wordBis);
     let wordBisString = wordBis.toString();
@@ -233,8 +279,7 @@ function change(wrongLetter) {
     let img = document.getElementById('gallows');
 
     if(wrongLetter < 7){
-        img.setAttribute('src', "./images/potence/potence-"+wrongLetter+".png");
-       
+        img.setAttribute('src', "./images/potence/potence-"+wrongLetter+".png"); 
     }
     else if(wrongLetter == 7){
         sectionDivGallows.style.display = "none";
@@ -243,16 +288,15 @@ function change(wrongLetter) {
         let imgD = document.createElement('img');
         imgD.setAttribute('src', "./images/potence/potence-"+wrongLetter+".png");
         imgD.setAttribute('alt','potence du jeu pendu');
-        sectionEnd.appendChild(imgD);
+        divEnd.appendChild(imgD);
         
         let looseConstruct = document.createElement('p');
         looseConstruct.id = "p-loose";
-        sectionEnd.appendChild(looseConstruct);
+        divEnd.appendChild(looseConstruct);
         let looseP = document.getElementById('p-loose');
         looseP.innerHTML = "Désolé, vous avez perdu ! !";
 
         rePlay();
-       
     }
 }
 
@@ -260,15 +304,18 @@ function rePlay(){
 
     let replayBtnConstruct = document.createElement('button');
     replayBtnConstruct.id = "replay";
-    sectionEnd.appendChild(replayBtnConstruct);
+    replayBtnConstruct.className = "btn";
+    divEnd.appendChild(replayBtnConstruct);
     let replayBtn = document.getElementById('replay');
     replayBtn.innerHTML = "rejouer";
 
     if(replayBtn.addEventListener("click", function() {
-        document.location.reload(true);
+        // document.location.reload(true);
+        deleted();
+        open();
     }));
-
 }
+
 function win(){
     sectionDivGallows.style.display = "none";
     sectionLetterContainer.style.display = "none";
@@ -276,9 +323,8 @@ function win(){
 
     let winConstruct = document.createElement('p');
     winConstruct.id = "p-win";
-    sectionEnd.appendChild(winConstruct);
+    divEnd.appendChild(winConstruct);
     let winP = document.getElementById('p-win');
     winP.innerHTML = "Bravo, vous avez gagné ! !";
-
     rePlay();
 }
