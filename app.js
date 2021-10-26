@@ -55,16 +55,17 @@ function deleted(){
     tabLetterEntered.remove();
     letterContainer.remove();
     gallows.remove();
-    replayBtn.remove();
 
     if(paramDivEndLoose == true){
         paramDivEndLoose = false;
         looseP.remove();
         imgD.remove();
+        replayBtn.remove();
     }
     if(paramDivEndWin == true){
         paramDivEndWin = false;
         winP.remove();
+        replayBtn.remove();
     }
 }
 
