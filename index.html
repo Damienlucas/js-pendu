@@ -9,9 +9,6 @@
         <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
-        <div class="confettis">
-            <div class="slot"></div>
-        </div>
         <main>
             <section id="section-choice">
                 <div class="column-center-center" id="div-choice">
@@ -42,11 +39,49 @@
                 </div>
             </section>
             <section id="section-end">
+                <div class="confettis">
+                    <div class="slot"></div>
+                </div>
                 <div class="column-center-center" id="div-end">
+                </div>
+            </section>
+            <section id="section-statistiques">
+                <div class="div-button" id="div-statistiques">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal-statistiques">
+                        Statistiques
+                    </button>
                 </div>
             </section>
     <!-- -----------------------------------------------------------------------modals--------------------------------------------- -->
             <section>
+                <div class="modal fade" id="exampleModal-statistiques" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Statistiques</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body column-center-center" id="modal-body-statistiques">
+                                <p>
+                                    Parties jouées : <span id="play-number"></span>
+                                </p>
+                                <p>
+                                    Parties gagnées : <span id="win-number"></span>
+                                </p>
+                                <p>
+                                    Parties perdues : <span id="number-loose"></span>
+                                </p>
+                                <p>
+                                    Parties abandonnées : <span id="number-leave"></span>
+                                </p>
+                                <button class="btn" id="reset">Remise à zéro</button>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
                 <div class="modal fade" id="exampleModal-animaux" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">

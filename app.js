@@ -16,11 +16,20 @@ const divEnd = document.getElementById('div-end');
 const playBtnAnimal = document.getElementById('play-animal');
 const playBtnKaamelott = document.getElementById('play-kaamelott');
 const playBtnAleatoire = document.getElementById('play-aleatoire');
+const reset = document.getElementById('reset');
+const winNumber = document.getElementById('win-number');
+const playNumber = document.getElementById('play-number');
+const looseNumber = document.getElementById('number-loose');
+const leaveNumber = document.getElementById('number-leave');
+
 var valeurLetterToTest;
 var badLetter = [];
 var letterEntered = [];
 var wrongLetter;
 var score = 0;
+var scoreLoose = 0;
+var start = 0;
+var leave;
 var wordBis = [];
 var begin = false;
 var param;
@@ -30,6 +39,11 @@ var paramDivEndWin;
 
 function open (){
     console.log("le nouveau score est de : "+score);
+    leave = start-score-scoreLoose;
+    winNumber.textContent = `${score}`;
+    looseNumber.textContent = `${scoreLoose}`;
+    leaveNumber.textContent = `${leave}`;
+    playNumber.textContent = `${start}`;
     choiceGenerate(); 
 }
 open();
@@ -105,6 +119,9 @@ function choiceGenerate(){
             param = "aleatoire";
             randomWordGenerate(param);
         }
+    });
+    reset.addEventListener("click", function() {
+        document.location.reload(true);
     });
 }
 
@@ -191,6 +208,9 @@ function play (){
     let menuBtn = document.getElementById('menu');
     let formEnv = document.getElementById('inputBox');
     let letterToTest = document.getElementById('letter-to-test');
+
+    start++;
+    playNumber.textContent = `${start}`;
 
     menuBtn.addEventListener("click", function() {
         deleted();
@@ -291,6 +311,8 @@ function winOrNot(wordBis){
     if(randomWord == wordBisReplace){
         score++;
         console.log("le score est de : "+score);
+        winNumber.textContent = `${score}`;
+
         win();
     }
 }
@@ -317,6 +339,8 @@ function change(wrongLetter) {
         let looseP = document.getElementById('p-loose');
         looseP.innerHTML = "Désolé, vous avez perdu ! !";
         paramDivEndLoose = true;
+        scoreLoose++;
+        looseNumber.textContent = `${scoreLoose}`;
 
         rePlay();
     }
