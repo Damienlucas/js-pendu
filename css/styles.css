@@ -8,6 +8,12 @@
     --hoverBack-color: #646267;
     --hoverCo-color: #DDD6E7;
 }
+body{
+    background: var(--premiere-color);
+    color: var(--text-color);
+    width: 100vw;
+    height: 100vh;
+}
 #section-choice, #section-end{
     width: 100vw;
     height: 100vh;
@@ -22,6 +28,11 @@
 }
 h1{
     text-align: center;
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+}
+#section-choice p{
+    font-size: 1.8rem;
 }
 #div-choice, #div-end{
     width: 100vw;
@@ -42,6 +53,10 @@ h1{
     background: var(--hoverBack-color);
     color: var(--hoverCo-color);
 }
+#section-letter-container{
+    background: var(--premiere-color);
+    color: var(--text-color);
+}
 #letter-container{
     display: flex;
     margin-top: 20px;
@@ -57,7 +72,7 @@ h1{
 .letter-div::after{
     content: "";
     width: 35px;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--hoverCo-color);
     visibility: visible;
 }
 form{
@@ -68,8 +83,12 @@ form{
     justify-content: space-around;
     font-size: 1.5rem;
 }
+#inputBox{
+    margin-top: 70px;
+}
 input{
     font-size: 1.5rem;
+    text-align: center;
 }
 button{
     font-size: 1.5rem;
@@ -78,16 +97,27 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--premiere-color);
+    color: var(--text-color);
+}
+#gallows{
+    margin-top: 40px;
 }
 #tab-letter-entered{
     font-size: 2rem;
     letter-spacing: 15px;
     border-radius: 10px;
-    border: 3px solid black;
-    height: 40px;
+    border: 3px solid var(--text-color);
+    height: 60px;
+    margin: 80px 20px 0 20px;
+    padding: 0 10px;
 }
 #menu{
     margin-top: 30px;
+}
+#p-win, #p-loose{
+    font-size: 2rem;
+    margin: 30px 0;
 }
 /* ------------------------------modal-------------------------- */
 .modal-content{
@@ -97,4 +127,30 @@ button{
 .modal-body img{
     width: 90%;
     height: auto;
+}
+.modal p{
+    font-size: 1.1rem;
+    margin-top: 15px;
+    text-align: justify;
+}
+/* -------------------------------explosion confettis---------------- */
+.confettis{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.slot{
+    position: relative;
+    perspective: 1000px;
+}
+.slot div{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
 }

@@ -161,6 +161,7 @@ function generate(){
 
     let sendLetterToTestConstruct = document.createElement('button');
     sendLetterToTestConstruct.id = "send-letter-to-test";
+    sendLetterToTestConstruct.className = "btn";
     formulaire.appendChild(sendLetterToTestConstruct);
     sendLetterToTestConstruct.innerHTML = "envoyer";
     
@@ -346,6 +347,43 @@ function win(){
     let winP = document.getElementById('p-win');
     winP.innerHTML = "Bravo, vous avez gagné ! !";
     paramDivEndWin = true;
-    
+
+    fiesta();
     rePlay();
 }
+
+
+// --------------------explosion confettis-----------------
+const containerSlot = document.querySelector('.slot');
+const emojis = ["⭐", "🌟", "🌠", "🏆"];
+
+function fiesta(){
+
+    if(isTweening()) return;
+
+    for(let i = 0; i < 200; i++){
+        const confetti = document.createElement('div');
+        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        containerSlot.appendChild(confetti);
+    }
+    animateConfettis();
+}
+function animateConfettis(){
+    const TLCONF = gsap.timeline();
+    TLCONF
+    .to('.slot div', { 
+        y: "random(-300,300)",
+        x: "random(-300,300)",
+        z: "random(0,1000)",
+        rotation: "random(-90,90)",
+        duration: 2,
+    })
+    .to('.slot div', {autoAlpha: 0, duration: 0.4}, '-=0.2')
+    .add(() => {
+        containerSlot.innerHTML = "";
+    })
+}
+function isTweening(){
+    return gsap.isTweening('.slot div');
+}
+// ------------------fin animation confetti-----------------
